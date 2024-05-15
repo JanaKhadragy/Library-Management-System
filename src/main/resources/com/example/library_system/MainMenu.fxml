@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="637.0" stylesheets="@dark-theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.library_system.MainMenuController">
+   <children>
+      <!-- Background Image -->
+      <ImageView fitHeight="651.0" fitWidth="665.0" layoutX="-12.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/Mainmenubackground.jpeg" />
+         </image>
+      </ImageView>
+
+      <!-- Add Book Button -->
+      <Button fx:id="AddBookButton" layoutX="66.0" layoutY="293.0" onAction="#Add_Book" prefHeight="42.0" prefWidth="170.0" styleClass="menu-button" stylesheets="@dark-theme.css" text="Add Book">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+
+      <!-- View Books Button -->
+      <Button fx:id="ViewBooksButton" layoutX="64.0" layoutY="366.0" onAction="#View_Book" prefHeight="42.0" prefWidth="170.0" styleClass="menu-button" stylesheets="@dark-theme.css" text="View Books">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+
+      <!-- Add Student Button -->
+      <Button fx:id="AddStudentGUI" layoutX="65.0" layoutY="433.0" onAction="#Add_Student" prefHeight="42.0" prefWidth="170.0" styleClass="menu-button" stylesheets="@dark-theme.css" text="Add Student">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+
+      <!-- View Students Button -->
+      <Button layoutX="64.0" layoutY="500.0" onAction="#View_Students" prefHeight="42.0" prefWidth="169.0" styleClass="menu-button" stylesheets="@dark-theme.css" text="View Students">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+
+      <!-- Loan Book Button -->
+      <Button layoutX="412.0" layoutY="294.0" onAction="#Loan_Book" prefHeight="42.0" prefWidth="170.0" styleClass="menu-button" stylesheets="@dark-theme.css" text="Loan Book">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+
+      <!-- View Loaned Books Button -->
+      <Button layoutX="407.0" layoutY="366.0" onAction="#ViewLoanedBooks" prefHeight="42.0" prefWidth="170.0" styleClass="menu-button" stylesheets="@dark-theme.css" text="View Loaned Books">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+
+      <!-- Return Book Button -->
+      <Button layoutX="407.0" layoutY="432.0" onAction="#Return_Book" prefHeight="42.0" prefWidth="170.0" styleClass="menu-button" stylesheets="@dark-theme.css" text="Return Book">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+
+      <!-- View Returned Books Button -->
+      <Button layoutX="412.0" layoutY="502.0" onAction="#ViewReturnedBooks" prefHeight="42.0" prefWidth="170.0" styleClass="menu-button" stylesheets="@dark-theme.css" text="View Returned Books">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Label alignment="CENTER" layoutX="173.0" layoutY="67.0" prefHeight="26.0" prefWidth="300.0" styleClass="column-header" stylesheets="@dark-theme.css" text="Main menu" textAlignment="CENTER">
+         <font>
+            <Font name="Arial" size="36.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
