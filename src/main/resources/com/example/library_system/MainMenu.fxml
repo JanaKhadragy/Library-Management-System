@@ -45,14 +45,14 @@
       </Button>
 
       <!-- Loan Book Button -->
-      <Button layoutX="412.0" layoutY="294.0" onAction="#Loan_Book" prefHeight="42.0" prefWidth="170.0" styleClass="menu-button" stylesheets="@dark-theme.css" text="Loan Book">
+      <Button layoutX="412.0" layoutY="294.0" onAction="#Issue_Book" prefHeight="42.0" prefWidth="170.0" styleClass="menu-button" stylesheets="@dark-theme.css" text="Loan Book">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
 
       <!-- View Loaned Books Button -->
-      <Button layoutX="407.0" layoutY="366.0" onAction="#ViewLoanedBooks" prefHeight="42.0" prefWidth="170.0" styleClass="menu-button" stylesheets="@dark-theme.css" text="View Loaned Books">
+      <Button layoutX="407.0" layoutY="366.0" onAction="#View_Issued" prefHeight="42.0" prefWidth="170.0" styleClass="menu-button" stylesheets="@dark-theme.css" text="View Loaned Books">
          <font>
             <Font size="24.0" />
          </font>

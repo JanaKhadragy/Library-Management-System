@@ -5,6 +5,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.application.Platform;
+
 
 import java.sql.*;
 
@@ -32,7 +34,7 @@ public class ViewBooksController{
     @FXML
     public void LoadData() {
         String BookViewQuery = "SELECT Book_ID,Title, Author, Publisher FROM books";
-        try (Connection connection = DatabaseConnector.getConnection();
+        try (Connection connection = DatabaseConnector.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(BookViewQuery);
              ResultSet queryOutput = statement.executeQuery()) {
             while (queryOutput.next()) {
@@ -56,52 +58,45 @@ public class ViewBooksController{
     }
     @FXML
     public void searchBook() {
-        ViewBookTable.getItems().clear();
-        String bookTitle = Search__Book.getText();
-        try (Connection connection = DatabaseConnector.getConnection()) {
-            String query = "SELECT * FROM books WHERE Title LIKE ?";
-            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-                preparedStatement.setString(1, "%" + bookTitle + "%");
-                ResultSet resultSet = preparedStatement.executeQuery();
-                boolean found = false;
-                StringBuilder searchResults = new StringBuilder();
-                while (resultSet.next()) {
-                    int bookId = resultSet.getInt("Book_ID");
-                    String title = resultSet.getString("Title");
-                    String author = resultSet.getString("Author");
-                    String publisher = resultSet.getString("Publisher");
-                    ViewBookTable.getItems().add(new Book(bookId, title, author, publisher));
+        ObservableList<Book> searchResults = FXCollections.observableArrayList();
+        String bookTitle = Search__Book.getText().trim();
+        String query = "SELECT * FROM books WHERE Title LIKE ?";
 
-                    searchResults.append("Book ID: ").append(bookId)
-                            .append(", Title: ").append(title)
-                            .append(", Author: ").append(author)
-                            .append(", Publisher: ").append(publisher)
-                            .append("\n");
+        try (Connection conn = DatabaseConnector.getInstance().getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, "%" + bookTitle + "%");
+            ResultSet rs = pstmt.executeQuery();
 
-                    found = true;
-                }
-
-                if (found) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Search Result");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Books found with title containing \"" + bookTitle + "\":\n" + searchResults.toString());
-                    alert.showAndWait();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("Search Result");
-                    alert.setHeaderText(null);
-                    alert.setContentText("No books found with title containing \"" + bookTitle + "\"");
-                    alert.showAndWait();
-                }
+            while (rs.next()) {
+                searchResults.add(new Book(
+                        rs.getInt("Book_ID"),
+                        rs.getString("Title"),
+                        rs.getString("Author"),
+                        rs.getString("Publisher")
+                ));
             }
+
+            Platform.runLater(() -> {
+                ViewBookTable.setItems(searchResults);
+                if (searchResults.isEmpty()) {
+                    showAlert(Alert.AlertType.INFORMATION, "Search Result", "No books found with title containing \"" + bookTitle + "\"");
+                } else {
+                    showAlert(Alert.AlertType.INFORMATION, "Search Result", "Books found with title containing \"" + bookTitle + "\": " + searchResults.size());
+                }
+            });
         } catch (SQLException e) {
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Error searching for books: " + e.getMessage());
-            alert.showAndWait();
+            Platform.runLater(() -> {
+                showAlert(Alert.AlertType.ERROR, "Error", "Error searching for books: " + e.getMessage());
+            });
         }
     }
+
+    private void showAlert(Alert.AlertType alertType, String title, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(content);
+        alert.showAndWait();
+    }
+
 }

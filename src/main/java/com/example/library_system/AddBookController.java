@@ -28,7 +28,7 @@ public class AddBookController {
 
     @FXML
     public void AddBookMethod() {
-        try (Connection connection = DatabaseConnector.getConnection()) {
+        try (Connection connection = DatabaseConnector.getInstance().getConnection()) {
             String query = "INSERT INTO books (Title, Author, Publisher) VALUES (?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, Tittle.getText());

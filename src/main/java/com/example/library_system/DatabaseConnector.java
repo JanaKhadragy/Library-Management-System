@@ -1,34 +1,40 @@
 package com.example.library_system;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import java.sql.*;
 
 public class DatabaseConnector {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/library_system";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "new_password";
+    private static DatabaseConnector instance;
+    private Connection connection;
 
-    public static Connection getConnection() throws SQLException {
+    private DatabaseConnector() {
         try {
-            // Load the MySQL JDBC driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Create the database connection
-            return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-        } catch (ClassNotFoundException e) {
-            showAlert(Alert.AlertType.ERROR, "Error", "MySQL JDBC driver not found!");
-            throw new SQLException("MySQL JDBC driver not found!", e);
+            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_system", "root", "new_password");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
         }
     }
 
-    private static void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    public static DatabaseConnector getInstance() {
+        if (instance == null) {
+            synchronized (DatabaseConnector.class) {
+                if (instance == null) {
+                    instance = new DatabaseConnector();
+                }
+            }
+        }
+        return instance;
     }
 
+    public Connection getConnection() {
+        try {
+            if (this.connection == null || this.connection.isClosed()) {
+                this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/library_system", "root", "new_password");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return this.connection;
+    }
 }

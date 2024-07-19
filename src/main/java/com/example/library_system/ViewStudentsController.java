@@ -31,7 +31,6 @@ public class ViewStudentsController {
 
 
     ObservableList<Student> students = FXCollections.observableArrayList();
-    ObservableList<Student> Search_students = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
@@ -41,7 +40,7 @@ public class ViewStudentsController {
     @FXML
     public void LoadStudents() {
         String StudentViewQuery = "SELECT StudentId, StudentName, StudentClass, StudentNumber FROM Students";
-        try (Connection connection = DatabaseConnector.getConnection();
+        try (Connection connection = DatabaseConnector.getInstance().getConnection();
              PreparedStatement statement = connection.prepareStatement(StudentViewQuery);
              ResultSet queryOutput = statement.executeQuery()) {
             while (queryOutput.next()) {
@@ -72,7 +71,7 @@ public class ViewStudentsController {
         String studentName = searchStudent.getText();
 
         // Query the database to search for the book by title
-        try (Connection connection = DatabaseConnector.getConnection()) {
+        try (Connection connection = DatabaseConnector.getInstance().getConnection()) {
             String query = "SELECT * FROM Students WHERE Students.StudentName LIKE ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                 // Use LIKE with wildcard (%) to search for similar titles

@@ -24,7 +24,7 @@ public class AddStudentController {
     private Button CancelButton;
     @FXML
     private void AddStudentMethod(){
-        try (Connection connection = DatabaseConnector.getConnection()) {
+        try (Connection connection = DatabaseConnector.getInstance().getConnection()) {
             String query = "INSERT INTO Students (StudentName, StudentClass, StudentNumber) VALUES (?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, StudentName.getText());

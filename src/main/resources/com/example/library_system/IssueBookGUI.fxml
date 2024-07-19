@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="680.0" prefWidth="944.0" stylesheets="@dark-theme.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.library_system.IssueBookGUIController">
+   <children>
+      <ImageView fitHeight="809.0" fitWidth="1040.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/Books4k.jpeg" />
+         </image>
+      </ImageView>
+      <TableView fx:id="viewStudentTable" layoutX="19.0" layoutY="294.0" prefHeight="384.0" prefWidth="294.0">
+        <columns>
+          <TableColumn fx:id="studentIdCol" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="studentNameCol" prefWidth="213.70367431640625" text="Name" />
+        </columns>
+      </TableView>
+      <TextField fx:id="searchStudent" layoutX="73.0" layoutY="201.0" prefHeight="45.0" prefWidth="174.0" promptText="Student Name" />
+      <Button layoutX="73.0" layoutY="260.0" mnemonicParsing="false" onAction="#searchStudentMethod" prefHeight="33.0" prefWidth="162.0" text="Search" />
+      <TableView fx:id="viewBookTable" layoutX="343.0" layoutY="300.0" prefHeight="383.0" prefWidth="294.0">
+         <columns>
+            <TableColumn fx:id="bookIdCol" prefWidth="75.0" text="ID" />
+            <TableColumn fx:id="bookTitleCol" prefWidth="175.87542724609375" text="Title" />
+         </columns>
+      </TableView>
+      <TextField fx:id="searchBook" layoutX="432.0" layoutY="201.0" prefHeight="45.0" prefWidth="174.0" promptText="Book Title" />
+      <Button layoutX="437.0" layoutY="260.0" mnemonicParsing="false" onAction="#searchBookMethod" prefHeight="33.0" prefWidth="162.0" text="Search" />
+      <TextField fx:id="bookIssueID" layoutX="722.0" layoutY="411.0" promptText="BookID" />
+      <TextField fx:id="studentIssueID" layoutX="724.0" layoutY="475.0" promptText="StudentID" />
+      <Button layoutX="781.0" layoutY="535.0" mnemonicParsing="false" onAction="#issueBook" prefHeight="48.0" prefWidth="198.0" text="Issue Book" />
+      <TextField fx:id="desiredDays" layoutX="721.0" layoutY="353.0" promptText="Desired Days" />
+   </children>
+</AnchorPane>
